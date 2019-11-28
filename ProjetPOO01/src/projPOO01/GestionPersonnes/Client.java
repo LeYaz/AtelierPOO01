@@ -1,0 +1,81 @@
+package projPOO01.GestionPersonnes;
+
+import java.util.List;
+
+import projPOO01.GestionAchat.Achat;
+import projPOO01.GestionAchat.commande;
+
+public class Client extends Personne implements IFournisseur, IClient {
+
+	
+	private int idclient;
+	
+
+
+	public Client(String nom, String prenom, String adresse, String ville, String codepostal, int idclient) {
+		super(nom, prenom, adresse, ville, codepostal);
+		// TODO Auto-generated constructor stub
+		this.idclient=idclient;
+	}
+
+	
+	
+	@Override
+	public String toString() {
+		return super.toString() +" [idclient=" + idclient + "]";
+	}
+
+
+
+	public int getIdclient() {
+		return idclient;
+	}
+
+
+	public void setIdclient(int idclient) {
+		this.idclient = idclient;
+	}
+
+
+	@Override
+	public boolean livre() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public void commande(List<commande> listcommande) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void achete(List<Achat> listachat) {
+		// TODO Auto-generated method stub
+		System.out.println("Client achete");
+	}
+
+	@Override
+	public boolean paie() {
+		// TODO Auto-generated method stub
+		System.out.println("Client paie");
+		return true;
+	}
+
+
+
+	@Override
+	public boolean isClient() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+
+	@Override
+	public boolean isFournisseur() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}
