@@ -1,9 +1,11 @@
 package projPOO01.GestionPersonnes;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 
 import ProjetPOO01.Enumerations.EFournisseur;
+import projPOO01.Exceptions.ExceptionNumeroUnique;
 import projPOO01.GestionAchat.Achat;
 import projPOO01.GestionAchat.commande;
 
@@ -80,6 +82,28 @@ public class Fournisseur extends Personne implements IClient, IFournisseur {
 	public boolean isFournisseur() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+	
+	public static void CtrlNumeroUniqueFournisseur(String ns, ArrayList<Fournisseur> list) throws ExceptionNumeroUnique{
+		int n=0;
+		try {
+			 n = Integer.parseInt(ns);
+			
+				
+			
+		}catch(Exception e) {
+			throw new ExceptionNumeroUnique("Le numero saisi n'est pas un entier");
+		}
+		for(Fournisseur c1:list) 
+		{
+			if(n!=c1.getIdfournisseur()) {
+				
+			}else {
+				throw new ExceptionNumeroUnique("Le numero unique est déja utilisé");
+				
+			}
+		}
+		
 	}
 
 }

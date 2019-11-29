@@ -1,9 +1,17 @@
 package projPOO01.GestionAchat;
 
-public class Achat {
+import java.util.Date;
 
-	public Achat() {
+public class Achat {
+	private Date date;
+	private String intitule;
+	private int quantite;
+	
+	public Achat(Date d, String i, int q) {
 		// TODO Auto-generated constructor stub
+		this.date =d;
+		this.intitule =i;
+		this.quantite =q;
 	}
 
 }

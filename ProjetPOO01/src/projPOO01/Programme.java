@@ -1,25 +1,31 @@
 package projPOO01;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import projPOO01.Exceptions.ExceptionNumeroUnique;
 import projPOO01.Exceptions.ExceptionSaisiNumeroSecu;
 import projPOO01.Exceptions.ExceptionSaisieCodePostal;
 import projPOO01.GestionAchat.Achat;
 import projPOO01.GestionPersonnes.Client;
 import projPOO01.GestionPersonnes.Fournisseur;
 import projPOO01.GestionPersonnes.IClient;
+import projPOO01.GestionPersonnes.Patron;
+import projPOO01.GestionPersonnes.Personne;
 import projPOO01.GestionPersonnes.Salarie;
 
 
 public class Programme {
 	
-	private static ArrayList<Client> listclient = new ArrayList<Client>();
-	private static ArrayList<Salarie> listsalarie = new ArrayList<Salarie>();
-	private static ArrayList<Fournisseur> listfournisseur = new ArrayList<Fournisseur>();
+	private static ArrayList<Personne> listclient = new ArrayList<Personne>();
+	private static ArrayList<Personne> listsalarie = new ArrayList<Personne>();
+	private static ArrayList<Personne> listfournisseur = new ArrayList<Personne>();
+	private static List<IClient> listeclient = new ArrayList<IClient>();
 	private static int choixmenu;
 	private static Scanner sc = new Scanner(System.in);
+	private static Patron patron = new Patron();
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -40,6 +46,7 @@ public class Programme {
 		
 		System.out.println("Taper 1 pour Saisir des données");
 		System.out.println("Taper 2 pour Afficher les données");
+		System.out.println("Taper 3 pour saisir des achats");
 		int choix;
 		
 		choix= Programme.sc.nextInt();
@@ -49,11 +56,14 @@ public class Programme {
 		break;
 		case 2 : Afficher();
 		break;
+		case 3: EffectuerAchat();
+		break;
 		default : Menu();
 		break;
 		}
 		
 	}
+	
 	
 	public static void RetourMenu() {
 		
@@ -69,7 +79,8 @@ public class Programme {
 		System.out.println("Taper 2 pour saisir les salariés");
 		System.out.println("Taper 3 pour saisir les clients");
 		System.out.println("Taper 4 pour saisir les fournisseur");
-		System.out.println("Taper 5 pour retourner au menu");
+		System.out.println("Taper 5 pour saisir le patron");
+		System.out.println("Taper 6 pour retourner au menu");
 		
 		choix=Programme.sc.nextInt();
 		choixmenu=choix;
@@ -83,7 +94,9 @@ public class Programme {
 		break;
 		case 4 : SaisirFournisseur();
 		break;
-		case 5 : Menu();
+		case 5 : SaisirPatron();
+		break;
+		case 6 : Menu();
 		break;
 		default : Saisir();
 		break;
@@ -93,75 +106,124 @@ public class Programme {
 	
 	public static void Afficher() {
 		int choix;
+		ArrayList<Personne> listpatron = new ArrayList<Personne>();
+		listpatron.add(patron);
 		
 		System.out.println("Taper 1 pour afficher toutes les données");
 		System.out.println("Taper 2 pour afficher les salariés");
 		System.out.println("Taper 3 pour afficher les clients");
 		System.out.println("Taper 4 pour afficher les fournisseur");
-		System.out.println("Taper 5 pour retourner au menu");
+		System.out.println("Taper 5 pour afficher le patron");
+		System.out.println("Taper 6 pour retourner au menu");
 		
 		choix=Programme.sc.nextInt();
 		
 		switch(choix) {
-		case 1 : AfficherAll();
+		case 1 : AfficherCommun(Programme.GrouperAffichage());
 		break;
-		case 2 : AfficherSalarie();
+		case 2 : AfficherCommun(Programme.listsalarie);
 		break;
-		case 3 : AfficherClient();
+		case 3 : AfficherCommun(Programme.listclient);
 		break;
-		case 4 : AfficherFournisseur();
+		case 4 : AfficherCommun(Programme.listfournisseur);
 		break;
-		case 5 : Menu();
+		case 5 : AfficherCommun(listpatron);
+		break;
+		case 6 : Menu();
 		break;
 		default : Afficher();
 		break;
 		}
 	}
 	
-	public static void AfficherAll() {
-		for(Salarie c:Programme.listsalarie) {
-			System.out.println(c.toString());
+	
+	public static void AfficherCommun(ArrayList<Personne> list ) {
+		for(Personne p:list) {
+			System.out.println(p.toString());
 		}
-		for(Client c:Programme.listclient) {
-			System.out.println(c.toString());
-		}
-		for(Fournisseur c:Programme.listfournisseur) {
-			System.out.println(c.toString());
-		}
+		RetourMenu();
+	}
+	
+	public static ArrayList<Personne> GrouperAffichage() {
+		ArrayList<Personne> list = new ArrayList<Personne>();
+		list.addAll(Programme.listsalarie);
+		list.addAll(Programme.listclient);
+		list.addAll(Programme.listfournisseur);
+		list.add(patron);
 		
-		RetourMenu();
-		
+		return list;
 	}
 	
-	public static void AfficherSalarie() {
-		for(Salarie c:Programme.listsalarie) {
-			System.out.println(c.toString());
-		}
-		RetourMenu();
-	}
-	
-	public static void AfficherClient() {
-		for(Client c:Programme.listclient) {
-			System.out.println(c.toString());
-		}
-		RetourMenu();
-	}
-	
-	public static void AfficherFournisseur() {
-		for(Fournisseur c:Programme.listfournisseur) {
-			System.out.println(c.toString());
-		}
-		RetourMenu();
-	}
 	
 	public static void SaisirAll(){
 		
 		Programme.SaisirSalarie();
 		Programme.SaisirClient();
 		Programme.SaisirFournisseur();
+		Programme.SaisirPatron();
 		Menu();
 	}
 	
+	public static void SaisirPatron() {
+		boolean erreurcp;
+		boolean erreurns;
+		System.out.println("Saisir le nom du patron");
+		patron.setNom(sc.next());
+		System.out.println("Saisir le prenom du patron");
+		patron.setPrenom(sc.next());
+		System.out.println("Saisir l'adresse du patron");
+		patron.setAdresse(sc.next());
+		System.out.println("Saisir la ville du patron");
+		patron.setVille(sc.next());
+		erreurcp = true;
+		while(erreurcp) {
+			try {
+				System.out.println("Saisir le codepostal du patron");
+				patron.setCodepostal(sc.next());
+				Salarie.CtrlCodePostal(patron.getCodepostal());
+				erreurcp = false;
+			} catch (ExceptionSaisieCodePostal e) {
+				// TODO Auto-generated catch block
+				
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		erreurns=true;
+		while(erreurns) {
+			try {
+				System.out.println("Saisir le numero de sécurité sociale du patron");
+				patron.setSecu(sc.next());
+				Salarie.CtrlSaisiNumeroSecu(patron.getSecu());
+				erreurns = false;
+			} catch (ExceptionSaisiNumeroSecu e) {
+				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		
+		
+		System.out.println("Saisir le salaire du patron");
+		while(sc.hasNext())
+		{
+			
+			if (sc.hasNextDouble()) {
+	            patron.setSalaire(sc.nextDouble());
+	            break;
+	         }
+			else
+			{
+				System.out.println("Saisir le salaire du patron");
+				sc.next();
+			}
+				
+		}
+		if(choixmenu!=1) {
+			Menu();
+		}
+		return;
+	}
 	
 	public static void SaisirSalarie(){
 		
@@ -231,7 +293,7 @@ public class Programme {
 			sl.add(s);
 		}
 		
-		listsalarie = sl;
+		listsalarie = new ArrayList<Personne>(sl);
 		if(choixmenu!=1) {
 			Menu();
 		}
@@ -241,11 +303,13 @@ public class Programme {
 	public static void SaisirClient(){
 		
 		ArrayList<Client> cl = new ArrayList<Client>();
-		String nom, prenom, adresse, ville, codepostal;
-		int idclient;
+		String nom, prenom, adresse, ville, codepostal="";
+		String idclient="";
 		boolean testid=false;
+		boolean erreurcp = true;
 		
-		for(int i=0;i<4; i++) {
+		
+		for(int i=0;i<1; i++) {
 			System.out.println("Saisir le nom du client");
 			nom = sc.next();
 			System.out.println("Saisir le prenom du client");
@@ -254,31 +318,42 @@ public class Programme {
 			adresse = sc.next();
 			System.out.println("Saisir la ville du client");
 			ville = sc.next();
-			System.out.println("Saisir le codepostal du client");
-			codepostal = sc.next();
-			
-			do {
-				System.out.println("Saisir le numero unique client");
-				
-				idclient = sc.nextInt();
-				testid=false;
-				for(Client c1:cl) {
-					if(idclient!=c1.getIdclient()) {
-						
-					}else {
-						System.out.println("numero unique déjà utilisé");
-						testid=true;
-					}
+			erreurcp = true;
+			while(erreurcp) {
+				try {
+					System.out.println("Saisir le codepostal du client");
+					codepostal = sc.next();
+					Salarie.CtrlCodePostal(codepostal);
+					erreurcp = false;
+				} catch (ExceptionSaisieCodePostal e) {
+					// TODO Auto-generated catch block
+					
+					System.out.println(e.getMessage());
 				}
-			}while(testid);
+			}
 			
-			Client c = new Client(nom, prenom, adresse, ville, codepostal, idclient);
+			testid=true;
+			while(testid) {
+				try{
+					System.out.println("Saisir le numero unique client");
+					idclient =sc.next();
+					Client.CtrlNumeroUniqueClient(idclient,cl);
+					testid=false;
+					
+				}catch(ExceptionNumeroUnique e) {
+					System.out.println(e.getMessage());
+				}
+				
+			}
+			
+
+			Client c = new Client(nom, prenom, adresse, ville, codepostal, Integer.parseInt(idclient));
 			
 			cl.add(c);
 		}
 		
 		
-		listclient = cl;
+		listclient = new ArrayList<Personne>(cl);
 		if(choixmenu!=1) {
 			Menu();
 		}
@@ -288,9 +363,11 @@ public class Programme {
 	public static void SaisirFournisseur(){
 		
 		ArrayList<Fournisseur> cl = new ArrayList<Fournisseur>();
-		String nom, prenom, adresse, ville, codepostal;
-		int idfournisseur;
-		boolean testid=false;
+		String nom, prenom, adresse, ville, codepostal="";
+		String idfournisseur="";
+		
+		boolean erreurcp=true;
+		boolean numunique = true;
 		
 		for(int i=0;i<3; i++) {
 			System.out.println("Saisir le nom du fournisseur");
@@ -301,37 +378,133 @@ public class Programme {
 			adresse = sc.next();
 			System.out.println("Saisir la ville du fournisseur");
 			ville = sc.next();
-			System.out.println("Saisir le codepostal du fournisseur");
-			codepostal = sc.next();
-			
-			do {
-				System.out.println("Saisir le numero unique fournisseur");
-				idfournisseur = sc.nextInt();
-				testid=false;
-				for(Fournisseur c1:cl) {
-					if(idfournisseur!=c1.getIdfournisseur()) {
-						
-					}else {
-						System.out.println("numero unique déjà utilisé");
-						testid=true;
-					}
+			erreurcp = true;
+			while(erreurcp) {
+				try {
+					System.out.println("Saisir le codepostal du fournisseur");
+					codepostal = sc.next();
+					Salarie.CtrlCodePostal(codepostal);
+					erreurcp = false;
+				} catch (ExceptionSaisieCodePostal e) {
+					// TODO Auto-generated catch block
+					
+					System.out.println(e.getMessage());
 				}
-			}while(testid);
+			}
+			numunique=true;
+			while(numunique) {
+				try{
+					System.out.println("Saisir le numero unique fournisseur");
+					idfournisseur =sc.next();
+					Fournisseur.CtrlNumeroUniqueFournisseur(idfournisseur,cl);
+					numunique=false;
+					
+				}catch(ExceptionNumeroUnique e) {
+					System.out.println(e.getMessage());
+				}
+				
+			}
 			
-			Fournisseur c = new Fournisseur(nom, prenom, adresse, ville, codepostal, idfournisseur);
+
+			
+			Fournisseur c = new Fournisseur(nom, prenom, adresse, ville, codepostal, Integer.parseInt(idfournisseur));
 			
 			cl.add(c);
 		}
 		
 		
-		listfournisseur = cl;
+		listfournisseur= new ArrayList<Personne>(cl);
 		if(choixmenu!=1) {
 			Menu();
 		}
 		return;
 	}
 	
+	
+	/**
+	 * Methode permettant de remplir un tableau d'achat
+	 * @return ArrayList<Achat>
+	 */
+	public static ArrayList<Achat> SaisirAchat(){
+		ArrayList<Achat> achats = new ArrayList<Achat>();
+		Date d; 
+		String intitule;
+		int qte;
+		boolean b = true;
+		
+		while(b) {
+			System.out.println("Entrez l'intitulé de votre achat");
+			 intitule =sc.next();
+			 System.out.println("Saisir la quantité ");
+			 qte= sc.nextInt();
+			 d = new Date();
+			 
+			 Achat a = new Achat(d, intitule, qte);
+			 achats.add(a);
+			 System.out.println("Voulez vous poursuivre vos achats si oui entrer oui ");
+			 if(sc.next().equals("oui")) {
+				 b=true;
+			 }else {
+				 b=false;
+			 }
+		}
+		
+		return achats;
+		
+	}
+	
+	/**
+	 * Méthode permettant de regrouper les IClient 
+	 * 
+	 * @return List<IClient>  pour qui isClient() est vrai
+	 */
+	public static void RegrouperIClient() {
+		List<IClient> list = new ArrayList<IClient>();
+		ArrayList<Personne> plist = new ArrayList<Personne>();
+		plist= GrouperAffichage();
+		for(Personne p: plist) {
+			if(p instanceof IClient)  {
+				list.add((IClient)p);
+			}
+		}
+		
+		for(IClient c:list) {
+			if(c.isClient()) {
+				Programme.listeclient.add(c);
+			}
+		}
+		
+	}
 
+	/**
+	 * Methode permettant d'afficher et de choisir un IClient
+	 * @param listc liste de IClient
+	 * @return IClient choisi par l'utilisateur
+	 */
+	public static IClient ChoisirIClient(List<IClient> listc) {
+		System.out.println("choix du client :");
+		int choix;
+		for(IClient c:listc) {
+			
+			System.out.println("Taper : " +listc.indexOf(c)+ " pour choisir : " + c.toString() );
+		}
+		
+		choix = sc.nextInt();
+		
+		IClient c = listc.get(choix);
+		
+		return c;
+	}
+	
+	public static void EffectuerAchat() {
+		RegrouperIClient();
+		IClient client = ChoisirIClient(Programme.listeclient);
+		List<Achat> a = SaisirAchat();
+		client.achete(a);
+		Menu();
+		
+		
+	}
 	
 	public static void gereclient(IClient client, List<Achat> listachat) {
 		client.achete(listachat);

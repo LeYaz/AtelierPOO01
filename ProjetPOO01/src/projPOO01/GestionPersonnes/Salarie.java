@@ -56,4 +56,25 @@ public class Salarie extends Personne implements IClient{
 		return false;
 	}
 
+
+	public String getSecu() {
+		return secu;
+	}
+
+
+	public void setSecu(String secu) {
+		this.secu = secu;
+	}
+
+
+	public double getSalaire() {
+		return salaire;
+	}
+
+
+	public void setSalaire(double salaire) {
+		this.salaire = salaire;
+	}
+	
+
 }
