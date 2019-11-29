@@ -14,4 +14,11 @@ public class Achat {
 		this.quantite =q;
 	}
 
+	@Override
+	public String toString() {
+		return intitule + "[date=" + date + ", quantite=" + quantite + "]";
+	}
+	
+	
+
 }

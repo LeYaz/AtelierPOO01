@@ -501,9 +501,7 @@ public class Programme {
 		IClient client = ChoisirIClient(Programme.listeclient);
 		List<Achat> a = SaisirAchat();
 		client.achete(a);
-		Menu();
-		
-		
+		Menu();	
 	}
 	
 	public static void gereclient(IClient client, List<Achat> listachat) {
