@@ -1,10 +1,13 @@
 package projPOO01;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import projPOO01.Exceptions.ExceptionDate;
 import projPOO01.Exceptions.ExceptionInt;
 import projPOO01.Exceptions.ExceptionNumeroUnique;
 import projPOO01.Exceptions.ExceptionSaisiNumeroSecu;
@@ -340,7 +343,7 @@ public class Programme {
 		boolean erreurcp = true;
 		
 		
-		for(int i=0;i<1; i++) {
+		for(int i=0;i<2; i++) {
 			System.out.println("Saisir le nom du client");
 			nom = sc.next();
 			System.out.println("Saisir le prenom du client");
@@ -458,11 +461,15 @@ public class Programme {
 	 */
 	public static ArrayList<Achat> SaisirAchat(){
 		ArrayList<Achat> achats = new ArrayList<Achat>();
-		Date d; 
+		Date d = null; 
 		String intitule;
 		String qte = null;
 		boolean b = true;
 		boolean erreurint=true;
+		String pattern = "dd/MM/yyyy";
+		SimpleDateFormat sd = new SimpleDateFormat(pattern);
+		boolean erreurdate=true;
+		String date;
 		
 		while(b) {
 			System.out.println("Entrez l'intitulé de votre achat");
@@ -481,7 +488,20 @@ public class Programme {
 				 
 			 }
 			 
-			 d = new Date();
+			 erreurdate=true;
+			 while(erreurdate) {
+				 System.out.println("veuillez saisir la date au format dd-MM-yyyy");
+				  date =sc.next();	 
+				 try {
+					d= CtrlDate(date);
+					
+					erreurdate=false;
+				} catch (ExceptionDate e) {
+					// TODO Auto-generated catch block
+					System.out.println(e.getMessage());
+				}
+			 }
+			 
 			 
 			 Achat a = new Achat(d, intitule, Integer.parseInt(qte));
 			 achats.add(a);
@@ -506,6 +526,7 @@ public class Programme {
 		List<IClient> list = new ArrayList<IClient>();
 		ArrayList<Personne> plist = new ArrayList<Personne>();
 		plist= GrouperAffichage();
+		Programme.listeclient.clear();
 		for(Personne p: plist) {
 			if(p instanceof IClient)  {
 				list.add((IClient)p);
@@ -558,6 +579,30 @@ public class Programme {
 		List<Achat> a = SaisirAchat();
 		client.achete(a);
 		Menu();	
+	}
+	
+	public static Date CtrlDate(String d) throws ExceptionDate{
+		String pattern = "dd/MM/yyyy";
+		SimpleDateFormat sd = new SimpleDateFormat(pattern);
+		sd.setLenient(false);
+		Date dt = new Date();
+		try {
+			dt =sd.parse(d);
+			
+		}catch(Exception e) {
+			throw new ExceptionDate("Mauvais format de date saisi");
+		}
+		return dt;
+//		if(dt.getDay()>31) {
+//			
+//		}else {
+//			throw new ExceptionDate("Le jour n'est pas valide");
+//		}
+//		if(dt.getMonth()>12) {
+//			
+//		}else {
+//			throw new ExceptionDate("Le mois n'est pas valide");
+//		}
 	}
 	
 	public static void CtrlInt(String ns) throws ExceptionInt{
