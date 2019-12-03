@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import projPOO01.Exceptions.ExceptionInt;
 import projPOO01.Exceptions.ExceptionNumeroUnique;
 import projPOO01.Exceptions.ExceptionSaisiNumeroSecu;
 import projPOO01.Exceptions.ExceptionSaisieCodePostal;
@@ -44,14 +45,29 @@ public class Programme {
 	
 	public static void Menu() {
 		
-		System.out.println("Taper 1 pour Saisir des données");
-		System.out.println("Taper 2 pour Afficher les données");
-		System.out.println("Taper 3 pour saisir des achats");
-		int choix;
 		
-		choix= Programme.sc.nextInt();
+		String choix = null;
+		boolean erreurint=true;
 		
-		switch(choix) {
+		 erreurint=true;
+			while(erreurint) {
+				try {
+					System.out.println("Taper 1 pour Saisir des données");
+					System.out.println("Taper 2 pour Afficher les données");
+					System.out.println("Taper 3 pour saisir des achats");
+					choix = sc.next();
+					CtrlInt(choix);
+					erreurint=false;
+					
+				}catch(ExceptionInt e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			
+		
+		
+		
+		switch(Integer.parseInt(choix)) {
 		case 1 : Saisir();
 		break;
 		case 2 : Afficher();
@@ -73,19 +89,34 @@ public class Programme {
 	}
 	
 	public static void Saisir() {
-		int choix;
+		String choix = null;
+		boolean erreurint=true;
 		
-		System.out.println("Taper 1 pour saisir toutes les données");
-		System.out.println("Taper 2 pour saisir les salariés");
-		System.out.println("Taper 3 pour saisir les clients");
-		System.out.println("Taper 4 pour saisir les fournisseur");
-		System.out.println("Taper 5 pour saisir le patron");
-		System.out.println("Taper 6 pour retourner au menu");
 		
-		choix=Programme.sc.nextInt();
-		choixmenu=choix;
+		erreurint=true;
+		while(erreurint) {
+			try {
+				System.out.println("Taper 1 pour saisir toutes les données");
+				System.out.println("Taper 2 pour saisir les salariés");
+				System.out.println("Taper 3 pour saisir les clients");
+				System.out.println("Taper 4 pour saisir les fournisseur");
+				System.out.println("Taper 5 pour saisir le patron");
+				System.out.println("Taper 6 pour retourner au menu");
+				
+				choix =sc.next();
+				CtrlInt(choix);
+				erreurint=false;
+				
+				
+			}catch(ExceptionInt e) {
+				System.out.println(e.getMessage());
+			}
+		}
 		
-		switch(choix) {
+		
+		choixmenu=Integer.parseInt(choix);
+		
+		switch(choixmenu) {
 		case 1 : SaisirAll();
 		break;
 		case 2 : SaisirSalarie();
@@ -429,17 +460,30 @@ public class Programme {
 		ArrayList<Achat> achats = new ArrayList<Achat>();
 		Date d; 
 		String intitule;
-		int qte;
+		String qte = null;
 		boolean b = true;
+		boolean erreurint=true;
 		
 		while(b) {
 			System.out.println("Entrez l'intitulé de votre achat");
 			 intitule =sc.next();
-			 System.out.println("Saisir la quantité ");
-			 qte= sc.nextInt();
+			 erreurint=true;
+			 while(erreurint) {
+				 System.out.println("Saisir la quantité ");
+				 try {
+					 qte=sc.next();
+					 CtrlInt(qte);
+					 erreurint=false;
+					 
+				 }catch(ExceptionInt e) {
+					 System.out.println(e.getMessage());
+				 }
+				 
+			 }
+			 
 			 d = new Date();
 			 
-			 Achat a = new Achat(d, intitule, qte);
+			 Achat a = new Achat(d, intitule, Integer.parseInt(qte));
 			 achats.add(a);
 			 System.out.println("Voulez vous poursuivre vos achats si oui entrer oui ");
 			 if(sc.next().equals("oui")) {
@@ -483,15 +527,27 @@ public class Programme {
 	 */
 	public static IClient ChoisirIClient(List<IClient> listc) {
 		System.out.println("choix du client :");
-		int choix;
+		String choix = null;
+		boolean erreurint = true;
 		for(IClient c:listc) {
 			
 			System.out.println("Taper : " +listc.indexOf(c)+ " pour choisir : " + c.toString() );
 		}
 		
-		choix = sc.nextInt();
+		 erreurint=true;
+		while(erreurint) {
+			try {
+				choix = sc.next();
+				CtrlInt(choix);
+				erreurint=false;
+				
+			}catch(ExceptionInt e) {
+				System.out.println(e.getMessage());
+			}
+		}
 		
-		IClient c = listc.get(choix);
+		
+		IClient c = listc.get(Integer.parseInt(choix));
 		
 		return c;
 	}
@@ -503,6 +559,19 @@ public class Programme {
 		client.achete(a);
 		Menu();	
 	}
+	
+	public static void CtrlInt(String ns) throws ExceptionInt{
+		int n=0;
+		try {
+			 n = Integer.parseInt(ns);
+			
+				
+			
+		}catch(Exception e) {
+			throw new ExceptionInt("Veuillez saisir un entier");
+		}
+		
+		}
 	
 	public static void gereclient(IClient client, List<Achat> listachat) {
 		client.achete(listachat);
