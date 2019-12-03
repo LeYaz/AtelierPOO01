@@ -12,6 +12,7 @@ import projPOO01.GestionAchat.commande;
 public class Fournisseur extends Personne implements IClient, IFournisseur {
 
 	private int idfournisseur;
+	private List<commande> commandes = new ArrayList<commande>();
 
 	public Fournisseur(String nom, String prenom, String adresse, String ville, String codepostal, int idfournisseur) {
 		super(nom, prenom, adresse, ville, codepostal);
@@ -28,7 +29,7 @@ public class Fournisseur extends Personne implements IClient, IFournisseur {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "[idfournisseur=" + idfournisseur + "]";
+		return super.toString() + "[idfournisseur=" + idfournisseur + ", commandes=" + commandes+"]";
 	}
 
 
@@ -65,7 +66,7 @@ public class Fournisseur extends Personne implements IClient, IFournisseur {
 	@Override
 	public void commande(List<commande> listcommande) {
 		// TODO Auto-generated method stub
-		
+		this.commandes = listcommande;
 	}
 
 

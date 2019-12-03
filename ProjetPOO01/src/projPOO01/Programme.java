@@ -13,9 +13,11 @@ import projPOO01.Exceptions.ExceptionNumeroUnique;
 import projPOO01.Exceptions.ExceptionSaisiNumeroSecu;
 import projPOO01.Exceptions.ExceptionSaisieCodePostal;
 import projPOO01.GestionAchat.Achat;
+import projPOO01.GestionAchat.commande;
 import projPOO01.GestionPersonnes.Client;
 import projPOO01.GestionPersonnes.Fournisseur;
 import projPOO01.GestionPersonnes.IClient;
+import projPOO01.GestionPersonnes.IFournisseur;
 import projPOO01.GestionPersonnes.Patron;
 import projPOO01.GestionPersonnes.Personne;
 import projPOO01.GestionPersonnes.Salarie;
@@ -27,6 +29,7 @@ public class Programme {
 	private static ArrayList<Personne> listsalarie = new ArrayList<Personne>();
 	private static ArrayList<Personne> listfournisseur = new ArrayList<Personne>();
 	private static List<IClient> listeclient = new ArrayList<IClient>();
+	private static List<IFournisseur> listifournisseur = new ArrayList<IFournisseur>();
 	private static int choixmenu;
 	private static Scanner sc = new Scanner(System.in);
 	private static Patron patron = new Patron();
@@ -58,6 +61,7 @@ public class Programme {
 					System.out.println("Taper 1 pour Saisir des données");
 					System.out.println("Taper 2 pour Afficher les données");
 					System.out.println("Taper 3 pour saisir des achats");
+					System.out.println("Taper 4 pour saisir des commandes");
 					choix = sc.next();
 					CtrlInt(choix);
 					erreurint=false;
@@ -77,6 +81,7 @@ public class Programme {
 		break;
 		case 3: EffectuerAchat();
 		break;
+		case 4: EffectuerCommande();
 		default : Menu();
 		break;
 		}
@@ -490,7 +495,7 @@ public class Programme {
 			 
 			 erreurdate=true;
 			 while(erreurdate) {
-				 System.out.println("veuillez saisir la date au format dd-MM-yyyy");
+				 System.out.println("veuillez saisir la date au format dd/MM/yyyy");
 				  date =sc.next();	 
 				 try {
 					d= CtrlDate(date);
@@ -517,6 +522,64 @@ public class Programme {
 		
 	}
 	
+	public static ArrayList<commande> SaisirCommande(){
+		ArrayList<commande> cmd = new ArrayList<commande>();
+		Date d = null; 
+		String intitule;
+		String qte = null;
+		boolean b = true;
+		boolean erreurint=true;
+		String pattern = "dd/MM/yyyy";
+		SimpleDateFormat sd = new SimpleDateFormat(pattern);
+		boolean erreurdate=true;
+		String date;
+		
+		while(b) {
+			System.out.println("Entrez l'intitulé de votre commande");
+			 intitule =sc.next();
+			 erreurint=true;
+			 while(erreurint) {
+				 System.out.println("Saisir la quantité ");
+				 try {
+					 qte=sc.next();
+					 CtrlInt(qte);
+					 erreurint=false;
+					 
+				 }catch(ExceptionInt e) {
+					 System.out.println(e.getMessage());
+				 }
+				 
+			 }
+			 
+			 erreurdate=true;
+			 while(erreurdate) {
+				 System.out.println("veuillez saisir la date au format dd/MM/yyyy");
+				  date =sc.next();	 
+				 try {
+					d= CtrlDate(date);
+					
+					erreurdate=false;
+				} catch (ExceptionDate e) {
+					// TODO Auto-generated catch block
+					System.out.println(e.getMessage());
+				}
+			 }
+			 
+			 
+			 commande c = new commande(d, intitule, Integer.parseInt(qte));
+			 cmd.add(c);
+			 System.out.println("Voulez vous poursuivre vos commande si oui entrer oui ");
+			 if(sc.next().equals("oui")) {
+				 b=true;
+			 }else {
+				 b=false;
+			 }
+		}
+		
+		return cmd;
+		
+	}
+	
 	/**
 	 * Méthode permettant de regrouper les IClient 
 	 * 
@@ -540,6 +603,25 @@ public class Programme {
 		}
 		
 	}
+	
+	public static void RegrouperIFournisseur() {
+		List<IFournisseur> list = new ArrayList<IFournisseur>();
+		ArrayList<Personne> plist = new ArrayList<Personne>();
+		plist= GrouperAffichage();
+		Programme.listifournisseur.clear();
+		for(Personne p: plist) {
+			if(p instanceof IFournisseur)  {
+				list.add((IFournisseur)p);
+			}
+		}
+		
+		for(IFournisseur f:list) {
+			if(f.isFournisseur()) {
+				Programme.listifournisseur.add(f);
+			}
+		}
+		
+	}
 
 	/**
 	 * Methode permettant d'afficher et de choisir un IClient
@@ -547,7 +629,7 @@ public class Programme {
 	 * @return IClient choisi par l'utilisateur
 	 */
 	public static IClient ChoisirIClient(List<IClient> listc) {
-		System.out.println("choix du client :");
+		System.out.println("choix du fournisseur :");
 		String choix = null;
 		boolean erreurint = true;
 		for(IClient c:listc) {
@@ -573,11 +655,48 @@ public class Programme {
 		return c;
 	}
 	
+	public static IFournisseur ChoisirIFournisseur(List<IFournisseur> listf) {
+		System.out.println("choix du client :");
+		String choix = null;
+		boolean erreurint = true;
+		for(IFournisseur f:listf) {
+			
+			System.out.println("Taper : " +listf.indexOf(f)+ " pour choisir : " + f.toString() );
+		}
+		
+		 erreurint=true;
+		while(erreurint) {
+			try {
+				choix = sc.next();
+				CtrlInt(choix);
+				erreurint=false;
+				
+			}catch(ExceptionInt e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		
+		IFournisseur f = listf.get(Integer.parseInt(choix));
+		
+		return f;
+	}
+	
 	public static void EffectuerAchat() {
 		RegrouperIClient();
 		IClient client = ChoisirIClient(Programme.listeclient);
 		List<Achat> a = SaisirAchat();
 		client.achete(a);
+		client.paie();
+		Menu();	
+	}
+	
+	public static void EffectuerCommande() {
+		RegrouperIFournisseur();
+		IFournisseur f = ChoisirIFournisseur(Programme.listifournisseur);
+		List<commande> c = SaisirCommande();
+		f.commande(c);
+		f.livre();
 		Menu();	
 	}
 	
