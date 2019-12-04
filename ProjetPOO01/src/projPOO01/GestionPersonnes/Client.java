@@ -34,6 +34,12 @@ public class Client extends Personne implements IFournisseur, IClient {
 	}
 
 
+	public List<Achat> getAchats() {
+		return achats;
+	}
+
+
+
 	public void setIdclient(int idclient) {
 		this.idclient = idclient;
 	}

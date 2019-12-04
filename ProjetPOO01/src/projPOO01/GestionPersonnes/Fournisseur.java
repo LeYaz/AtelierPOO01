@@ -27,6 +27,10 @@ public class Fournisseur extends Personne implements IClient, IFournisseur {
 
 	
 	
+	public List<commande> getCommandes() {
+		return commandes;
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + "[idfournisseur=" + idfournisseur + ", commandes=" + commandes+"]";

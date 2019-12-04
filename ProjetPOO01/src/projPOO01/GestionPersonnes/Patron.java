@@ -2,6 +2,8 @@ package projPOO01.GestionPersonnes;
 
 public class Patron extends Salarie implements IPatron {
 	
+
+	
 	public Patron() {
 		super("","","","","","",0);
 	}
