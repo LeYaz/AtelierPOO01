@@ -1,5 +1,9 @@
 package projPOO01.GestionPersonnes;
 
+import projPOO01.Exceptions.ExceptionSaisiNumeroSecu;
+import projPOO01.Exceptions.ExceptionSaisieCodePostal;
+import projPOO01.Menu.Menus;
+
 public class Patron extends Salarie implements IPatron {
 	
 
@@ -31,6 +35,8 @@ public class Patron extends Salarie implements IPatron {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 	
 	
 
