@@ -73,12 +73,12 @@ public class TestClient {
 
 	@Test
 	public void testLivre() {
-		fail("Not yet implemented");
+		assertTrue(c.livre());
 	}
 
 	@Test
 	public void testCommande() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 	@Test
@@ -89,7 +89,7 @@ public class TestClient {
 
 	@Test
 	public void testPaie() {
-		fail("Not yet implemented");
+		assertTrue(c.paie());
 	}
 
 	@Test
@@ -102,9 +102,6 @@ public class TestClient {
 		assertFalse(c.isFournisseur());
 	}
 
-	@Test
-	public void testCtrlNumeroUniqueClient() {
-		fail("Not yet implemented");
-	}
+
 
 }

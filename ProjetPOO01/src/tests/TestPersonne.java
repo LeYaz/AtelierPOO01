@@ -92,9 +92,6 @@ public class TestPersonne {
 		assertEquals(setcodepostal,p.getCodepostal());
 	}
 
-	@Test
-	public void testCtrlCodePostal() {
-		fail("Not yet implemented");
-	}
+
 
 }

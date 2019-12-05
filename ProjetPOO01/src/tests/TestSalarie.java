@@ -42,7 +42,7 @@ public class TestSalarie {
 
 	@Test
 	public void testAchete() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 	@Test
@@ -50,10 +50,7 @@ public class TestSalarie {
 		assertTrue(s.paie());
 	}
 
-	@Test
-	public void testCtrlSaisiNumeroSecu() {
-		fail("Not yet implemented");
-	}
+	
 
 	@Test
 	public void testIsClient() {

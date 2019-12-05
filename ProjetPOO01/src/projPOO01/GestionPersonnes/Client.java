@@ -61,13 +61,13 @@ public class Client extends Personne implements IFournisseur, IClient {
 	public void achete(List<Achat> listachat) {
 		// TODO Auto-generated method stub
 		this.achats = listachat;
-		System.out.println("Client achete");
+
 	}
 
 	@Override
 	public boolean paie() {
 		// TODO Auto-generated method stub
-		System.out.println("Client paie");
+
 		return true;
 	}
 
