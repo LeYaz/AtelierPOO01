@@ -1,6 +1,7 @@
 package projPOO01.Menu;
 
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import projPOO01.Controles.Controles;
 import projPOO01.Exceptions.ExceptionInt;
@@ -17,14 +18,18 @@ public class Menus {
 		
 		String choix = null;
 		boolean erreurint=true;
+		Stream<String> txt = Stream.of(
+				new String[] {"Taper 1 pour saisir des données",
+						"Taper 2 pour Afficher les données",
+						"Taper 3 pour saisir des achats",
+						"Taper 4 pour saisir des commandes",
+						});
 		
 		 erreurint=true;
 			while(erreurint) {
 				try {
-					System.out.println("Taper 1 pour Saisir des données");
-					System.out.println("Taper 2 pour Afficher les données");
-					System.out.println("Taper 3 pour saisir des achats");
-					System.out.println("Taper 4 pour saisir des commandes");
+
+					txt.forEach(s -> System.out.println(s));
 					choix = sc.next();
 					Controles.CtrlInt(choix);
 					erreurint=false;
@@ -62,17 +67,19 @@ public class Menus {
 	public static void Saisir() {
 		String choix = null;
 		boolean erreurint=true;
-		
+		Stream<String> txt = Stream.of(
+				new String[] {"Taper 1 pour saisir toutes les données",
+						"Taper 2 pour saisir les salariés",
+						"Taper 3 pour saisir les clients",
+						"Taper 4 pour saisir les fournisseur",
+						"Taper 5 pour saisir le patron",
+						"Taper 6 pour retourner au menu"});
 		
 		erreurint=true;
 		while(erreurint) {
 			try {
-				System.out.println("Taper 1 pour saisir toutes les données");
-				System.out.println("Taper 2 pour saisir les salariés");
-				System.out.println("Taper 3 pour saisir les clients");
-				System.out.println("Taper 4 pour saisir les fournisseur");
-				System.out.println("Taper 5 pour saisir le patron");
-				System.out.println("Taper 6 pour retourner au menu");
+			
+				txt.forEach(s -> System.out.println(s));
 				
 				choix =sc.next();
 				Controles.CtrlInt(choix);

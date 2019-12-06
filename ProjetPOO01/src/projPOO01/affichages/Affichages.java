@@ -1,8 +1,8 @@
 package projPOO01.affichages;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
-import projPOO01.Programme;
 import projPOO01.GestionPersonnes.Personne;
 import projPOO01.Menu.Menus;
 import projPOO01.saisie.Saisir;
@@ -13,13 +13,17 @@ public class Affichages {
 		int choix;
 		ArrayList<Personne> listpatron = new ArrayList<Personne>();
 		listpatron.add(Saisir.patron);
-		
-		System.out.println("Taper 1 pour afficher toutes les données");
-		System.out.println("Taper 2 pour afficher les salariés");
-		System.out.println("Taper 3 pour afficher les clients");
-		System.out.println("Taper 4 pour afficher les fournisseur");
-		System.out.println("Taper 5 pour afficher le patron");
-		System.out.println("Taper 6 pour retourner au menu");
+		Stream<String> txt = Stream.of(
+				new String[] {
+						"Taper 1 pour afficher toutes les données",
+						"Taper 2 pour afficher les salariés",
+						"Taper 3 pour afficher les clients",
+						"Taper 4 pour afficher les fournisseur",
+						"Taper 5 pour afficher le patron",
+						"Taper 6 pour retourner au menu"
+				});
+		txt.forEach(t -> System.out.println(t));
+
 		
 		choix=Menus.sc.nextInt();
 		
@@ -43,9 +47,8 @@ public class Affichages {
 	
 	
 	public static void AfficherCommun(ArrayList<Personne> list ) {
-		for(Personne p:list) {
-			System.out.println(p.toString());
-		}
+		list.forEach(p -> System.out.println(p.toString()));
+		
 		Menus.RetourMenu();
 	}
 	
