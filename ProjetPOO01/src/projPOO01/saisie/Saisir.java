@@ -27,48 +27,26 @@ public class Saisir {
 	public static ArrayList<Personne> listsalarie = new ArrayList<Personne>();
 	public static ArrayList<Personne> listfournisseur = new ArrayList<Personne>();
 	private static String t = "";
-	
-	public static void SaisirAll(){
-		
+
+	public static void SaisirAll() {
+
 		Saisir.SaisirSalarie();
 		Saisir.SaisirClient();
 		Saisir.SaisirFournisseur();
 		Saisir.SaisirPatron();
 		Menus.Menu();
 	}
-	
-	
+
 	public static void SaisirPatron() {
-		boolean erreurcp;
+
 		boolean erreurns;
 		SaisirGeneric(patron);
-//		System.out.println("Saisir le nom du patron");
-//		patron.setNom(Menus.sc.next());
-//		System.out.println("Saisir le prenom du patron");
-//		patron.setPrenom(Menus.sc.next());
-//		System.out.println("Saisir l'adresse du patron");
-//		patron.setAdresse(Menus.sc.next());
-//		System.out.println("Saisir la ville du patron");
-//		patron.setVille(Menus.sc.next());
-		erreurcp = true;
-		while(erreurcp) {
-			try {
-				System.out.println("Saisir le codepostal du patron");
-				patron.setCodepostal(Menus.sc.next());
-				Salarie.CtrlCodePostal(patron.getCodepostal());
-				erreurcp = false;
-			} catch (ExceptionSaisieCodePostal e) {
-				// TODO Auto-generated catch block
-				
-				System.out.println(e.getMessage());
-			}
-		}
-		
-		erreurns=true;
-		while(erreurns) {
+
+		erreurns = true;
+		while (erreurns) {
 			try {
 				System.out.println("Saisir le numero de sécurité sociale du patron");
-				patron.setSecu(Menus.sc.next());
+				patron.setSecu(Menus.sc.nextLine());
 				Salarie.CtrlSaisiNumeroSecu(patron.getSecu());
 				erreurns = false;
 			} catch (ExceptionSaisiNumeroSecu e) {
@@ -76,364 +54,311 @@ public class Saisir {
 				System.out.println(e.getMessage());
 			}
 		}
-		
-		
-		
+
 		System.out.println("Saisir le salaire du patron");
-		while(Menus.sc.hasNext())
-		{
-			
+		while (Menus.sc.hasNext()) {
+
 			if (Menus.sc.hasNextDouble()) {
-	            patron.setSalaire(Menus.sc.nextDouble());
-	            break;
-	         }
-			else
-			{
+				patron.setSalaire(Menus.sc.nextDouble());
+				Menus.sc.nextLine();
+				break;
+			} else {
 				System.out.println("Saisir le salaire du patron");
-				Menus.sc.next();
+				Menus.sc.nextLine();
 			}
-				
+
 		}
-		if(Menus.choixmenu!=1) {
+		if (Menus.choixmenu != 1) {
 			Menus.Menu();
-			
+
 		}
 		return;
 	}
 
-	public static void SaisirSalarie(){
-		
+	public static void SaisirSalarie() {
+
 		ArrayList<Salarie> sl = new ArrayList<Salarie>();
-		String nom, prenom, adresse, ville, codepostal="", secu = null;
-		double salaire=0;
-		boolean erreurcp = true;
-		boolean erreurns =true;
-		
-		for(int i=0;i<5; i++) {
-			System.out.println("Saisir le nom du salarie");
-			nom = Menus.sc.next();
-			System.out.println("Saisir le prenom du salarie");
-			prenom = Menus.sc.next();
-			System.out.println("Saisir l'adresse du salarie");
-			adresse = Menus.sc.next();
-			System.out.println("Saisir la ville du salarie");
-			ville = Menus.sc.next();
-			erreurcp = true;
-			while(erreurcp) {
-				try {
-					System.out.println("Saisir le codepostal du salarie");
-					codepostal = Menus.sc.next();
-					Salarie.CtrlCodePostal(codepostal);
-					erreurcp = false;
-				} catch (ExceptionSaisieCodePostal e) {
-					// TODO Auto-generated catch block
-					
-					System.out.println(e.getMessage());
-				}
-			}
+		String secu = null;
+		double salaire = 0;
+		boolean erreurns = true;
+
+		for (int i = 0; i < 5; i++) {
+			Salarie salarie = new Salarie();
+			SaisirGeneric(salarie);
 			
-			erreurns=true;
-			while(erreurns) {
+			erreurns = true;
+			while (erreurns) {
 				try {
 					System.out.println("Saisir le numero de sécurité sociale du salarie");
-					secu = Menus.sc.next();
+					secu = Menus.sc.nextLine();
 					Salarie.CtrlSaisiNumeroSecu(secu);
 					erreurns = false;
 				} catch (ExceptionSaisiNumeroSecu e) {
 					// TODO Auto-generated catch block
-					System.out.println(e.getMessage()+ " "+ secu.length());
+					System.out.println(e.getMessage() + " " + secu.length());
 				}
 			}
-			
-			
-			salaire=0;
+
+			salaire = 0;
 			System.out.println("Saisir le salaire du salarie");
-			while(Menus.sc.hasNext()&& salaire == 0)
-			{
-				
+			while (Menus.sc.hasNext() && salaire == 0) {
+
 				if (Menus.sc.hasNextDouble()) {
-		            salaire = Menus.sc.nextDouble();
-		            break;
-		         }
-				else
-				{
+					salaire = Menus.sc.nextDouble();
+					break;
+				} else {
 					System.out.println("Saisir le salaire du salarie");
-					Menus.sc.next();
+					Menus.sc.nextLine();
 				}
-					
+
 			}
-			
-			
-			Salarie s = new Salarie(nom, prenom, adresse, ville, codepostal, secu, salaire);
-			
+
+			Salarie s = new Salarie(salarie.getNom(), salarie.getPrenom(), salarie.getAdresse(), salarie.getVille(), salarie.getCodepostal(), secu, salaire);
+
 			sl.add(s);
 		}
-		
+
 		listsalarie = new ArrayList<Personne>(sl);
-		if(Menus.choixmenu!=1) {
+		if (Menus.choixmenu != 1) {
 			Menus.Menu();
 		}
 		return;
 	}
-	
-	public static void SaisirClient(){
-		
+
+	public static void SaisirClient() {
+
 		ArrayList<Client> cl = new ArrayList<Client>();
-		String nom, prenom, adresse, ville, codepostal="";
-		String idclient="";
-		boolean testid=false;
-		boolean erreurcp = true;
-		
-		
-		for(int i=0;i<2; i++) {
-			System.out.println("Saisir le nom du client");
-			nom = Menus.sc.next();
-			System.out.println("Saisir le prenom du client");
-			prenom = Menus.sc.next();
-			System.out.println("Saisir l'adresse du client");
-			adresse = Menus.sc.next();
-			System.out.println("Saisir la ville du client");
-			ville = Menus.sc.next();
-			erreurcp = true;
-			while(erreurcp) {
+		String idclient = "";
+		boolean testid = false;
+
+
+		for (int i = 0; i < 2; i++) {
+			Client client = new Client();
+			SaisirGeneric(client);
+
+			testid = true;
+			while (testid) {
 				try {
-					System.out.println("Saisir le codepostal du client");
-					codepostal = Menus.sc.next();
-					Salarie.CtrlCodePostal(codepostal);
-					erreurcp = false;
-				} catch (ExceptionSaisieCodePostal e) {
-					// TODO Auto-generated catch block
-					
-					System.out.println(e.getMessage());
-				}
-			}
-			
-			testid=true;
-			while(testid) {
-				try{
 					System.out.println("Saisir le numero unique client");
-					idclient =Menus.sc.next();
-					Client.CtrlNumeroUniqueClient(idclient,cl);
-					testid=false;
-					
-				}catch(ExceptionNumeroUnique e) {
+					idclient = Menus.sc.nextLine();
+					Client.CtrlNumeroUniqueClient(idclient, cl);
+					testid = false;
+
+				} catch (ExceptionNumeroUnique e) {
 					System.out.println(e.getMessage());
 				}
-				
-			}
-			
 
-			Client c = new Client(nom, prenom, adresse, ville, codepostal, Integer.parseInt(idclient));
-			
+			}
+
+			Client c = new Client(client.getNom(), client.getPrenom(), client.getAdresse(), client.getVille(), client.getCodepostal(), Integer.parseInt(idclient));
+
 			cl.add(c);
 		}
-		
-		
+
 		listclient = new ArrayList<Personne>(cl);
-		if(Menus.choixmenu!=1) {
+		if (Menus.choixmenu != 1) {
 			Menus.Menu();
 		}
 		return;
 	}
-	
-	public static void SaisirFournisseur(){
-		
-		ArrayList<Fournisseur> cl = new ArrayList<Fournisseur>();
-		String nom, prenom, adresse, ville, codepostal="";
-		String idfournisseur="";
-		
-		boolean erreurcp=true;
-		boolean numunique = true;
-		
-		for(int i=0;i<3; i++) {
-			System.out.println("Saisir le nom du fournisseur");
-			nom = Menus.sc.next();
-			System.out.println("Saisir le prenom du fournisseur");
-			prenom = Menus.sc.next();
-			System.out.println("Saisir l'adresse du fournisseur");
-			adresse = Menus.sc.next();
-			System.out.println("Saisir la ville du fournisseur");
-			ville = Menus.sc.next();
-			erreurcp = true;
-			while(erreurcp) {
-				try {
-					System.out.println("Saisir le codepostal du fournisseur");
-					codepostal = Menus.sc.next();
-					Salarie.CtrlCodePostal(codepostal);
-					erreurcp = false;
-				} catch (ExceptionSaisieCodePostal e) {
-					// TODO Auto-generated catch block
-					
-					System.out.println(e.getMessage());
-				}
-			}
-			numunique=true;
-			while(numunique) {
-				try{
-					System.out.println("Saisir le numero unique fournisseur");
-					idfournisseur =Menus.sc.next();
-					Fournisseur.CtrlNumeroUniqueFournisseur(idfournisseur,cl);
-					numunique=false;
-					
-				}catch(ExceptionNumeroUnique e) {
-					System.out.println(e.getMessage());
-				}
-				
-			}
-			
 
-			
-			Fournisseur c = new Fournisseur(nom, prenom, adresse, ville, codepostal, Integer.parseInt(idfournisseur));
-			
+	public static void SaisirFournisseur() {
+
+		ArrayList<Fournisseur> cl = new ArrayList<Fournisseur>();
+		String idfournisseur = "";
+		boolean numunique = true;
+
+		for (int i = 0; i < 3; i++) {
+			Fournisseur f = new Fournisseur();
+			SaisirGeneric(f);
+//			
+			numunique = true;
+			while (numunique) {
+				try {
+					System.out.println("Saisir le numero unique fournisseur");
+					idfournisseur = Menus.sc.nextLine();
+					Fournisseur.CtrlNumeroUniqueFournisseur(idfournisseur, cl);
+					numunique = false;
+
+				} catch (ExceptionNumeroUnique e) {
+					System.out.println(e.getMessage());
+				}
+
+			}
+
+			Fournisseur c = new Fournisseur(f.getNom(), f.getPrenom(), f.getAdresse(), f.getVille(), f.getCodepostal(), Integer.parseInt(idfournisseur));
+
 			cl.add(c);
 		}
-		
-		
-		listfournisseur= new ArrayList<Personne>(cl);
-		if(Menus.choixmenu!=1) {
+
+		listfournisseur = new ArrayList<Personne>(cl);
+		if (Menus.choixmenu != 1) {
 			Menus.Menu();
 		}
 		return;
 	}
-	
+
 	/**
 	 * Methode permettant de remplir un tableau d'achat
+	 * 
 	 * @return ArrayList<Achat>
 	 */
-	public static ArrayList<Achat> SaisirAchat(){
+	public static ArrayList<Achat> SaisirAchat() {
 		ArrayList<Achat> achats = new ArrayList<Achat>();
-		Date d = null; 
+		Date d = null;
 		String intitule;
 		String qte = null;
 		boolean b = true;
-		boolean erreurint=true;
+		boolean erreurint = true;
 		String pattern = "dd/MM/yyyy";
 		SimpleDateFormat sd = new SimpleDateFormat(pattern);
-		boolean erreurdate=true;
+		boolean erreurdate = true;
 		String date;
-		
-		while(b) {
+
+		while (b) {
 			System.out.println("Entrez l'intitulé de votre achat");
-			 intitule =Menus.sc.next();
-			 erreurint=true;
-			 while(erreurint) {
-				 System.out.println("Saisir la quantité ");
-				 try {
-					 qte=Menus.sc.next();
-					 Controles.CtrlInt(qte);
-					 erreurint=false;
-					 
-				 }catch(ExceptionInt e) {
-					 System.out.println(e.getMessage());
-				 }
-				 
-			 }
-			 
-			 erreurdate=true;
-			 while(erreurdate) {
-				 System.out.println("veuillez saisir la date au format dd/MM/yyyy");
-				  date =Menus.sc.next();	 
-				 try {
-					d= Controles.CtrlDate(date);
-					
-					erreurdate=false;
+			intitule = Menus.sc.nextLine();
+			erreurint = true;
+			while (erreurint) {
+				System.out.println("Saisir la quantité ");
+				try {
+					qte = Menus.sc.nextLine();
+					Controles.CtrlInt(qte);
+					erreurint = false;
+
+				} catch (ExceptionInt e) {
+					System.out.println(e.getMessage());
+				}
+
+			}
+
+			erreurdate = true;
+			while (erreurdate) {
+				System.out.println("veuillez saisir la date au format dd/MM/yyyy");
+				date = Menus.sc.nextLine();
+				try {
+					d = Controles.CtrlDate(date);
+
+					erreurdate = false;
 				} catch (ExceptionDate e) {
 					// TODO Auto-generated catch block
 					System.out.println(e.getMessage());
 				}
-			 }
-			 
-			 
-			 Achat a = new Achat(d, intitule, Integer.parseInt(qte));
-			 achats.add(a);
-			 System.out.println("Voulez vous poursuivre vos achats si oui entrer oui ");
-			 if(Menus.sc.next().equals("oui")) {
-				 b=true;
-			 }else {
-				 b=false;
-			 }
+			}
+
+			Achat a = new Achat(d, intitule, Integer.parseInt(qte));
+			achats.add(a);
+			System.out.println("Voulez vous poursuivre vos achats si oui entrer oui ");
+			if (Menus.sc.nextLine().equals("oui")) {
+				b = true;
+			} else {
+				b = false;
+			}
 		}
-		
+
 		return achats;
-		
+
 	}
-	
-	public static ArrayList<commande> SaisirCommande(){
+
+	public static ArrayList<commande> SaisirCommande() {
 		ArrayList<commande> cmd = new ArrayList<commande>();
-		Date d = null; 
+		Date d = null;
 		String intitule;
 		String qte = null;
 		boolean b = true;
-		boolean erreurint=true;
+		boolean erreurint = true;
 		String pattern = "dd/MM/yyyy";
 		SimpleDateFormat sd = new SimpleDateFormat(pattern);
-		boolean erreurdate=true;
+		boolean erreurdate = true;
 		String date;
-		
-		while(b) {
+
+		while (b) {
 			System.out.println("Entrez l'intitulé de votre commande");
-			 intitule =Menus.sc.next();
-			 erreurint=true;
-			 while(erreurint) {
-				 System.out.println("Saisir la quantité ");
-				 try {
-					 qte=Menus.sc.next();
-					 Controles.CtrlInt(qte);
-					 erreurint=false;
-					 
-				 }catch(ExceptionInt e) {
-					 System.out.println(e.getMessage());
-				 }
-				 
-			 }
-			 
-			 erreurdate=true;
-			 while(erreurdate) {
-				 System.out.println("veuillez saisir la date au format dd/MM/yyyy");
-				  date =Menus.sc.next();	 
-				 try {
-					d= Controles.CtrlDate(date);
-					
-					erreurdate=false;
+			intitule = Menus.sc.nextLine();
+			erreurint = true;
+			while (erreurint) {
+				System.out.println("Saisir la quantité ");
+				try {
+					qte = Menus.sc.nextLine();
+					Controles.CtrlInt(qte);
+					erreurint = false;
+
+				} catch (ExceptionInt e) {
+					System.out.println(e.getMessage());
+				}
+
+			}
+
+			erreurdate = true;
+			while (erreurdate) {
+				System.out.println("veuillez saisir la date au format dd/MM/yyyy");
+				date = Menus.sc.nextLine();
+				try {
+					d = Controles.CtrlDate(date);
+
+					erreurdate = false;
 				} catch (ExceptionDate e) {
 					// TODO Auto-generated catch block
 					System.out.println(e.getMessage());
 				}
-			 }
-			 
-			 
-			 commande c = new commande(d, intitule, Integer.parseInt(qte));
-			 cmd.add(c);
-			 System.out.println("Voulez vous poursuivre vos commande si oui entrer oui ");
-			 if(Menus.sc.next().equals("oui")) {
-				 b=true;
-			 }else {
-				 b=false;
-			 }
+			}
+
+			commande c = new commande(d, intitule, Integer.parseInt(qte));
+			cmd.add(c);
+			System.out.println("Voulez vous poursuivre vos commande si oui entrer oui ");
+			if (Menus.sc.nextLine().equals("oui")) {
+				b = true;
+			} else {
+				b = false;
+			}
 		}
-		
+
 		return cmd;
-		
+
 	}
-	
+
 	public static void SaisirGeneric(Personne o) {
-		
+
 		Map<String, iSaisie> m = new HashMap<String, iSaisie>();
-		m.put("a: Saisir le nom du " + o.getClass().getSimpleName(), (z) -> { z = Menus.sc.nextLine();o.setNom(z);});
-		m.put("b: Saisir le prenom du " + o.getClass().getSimpleName(), (t) -> { t = Menus.sc.nextLine();o.setPrenom(t);});
-		m.put("c: Saisir l'adresse du " + o.getClass().getSimpleName(), (t) -> { t = Menus.sc.nextLine();o.setAdresse(t);});
-		m.put("d: Saisir la ville du " + o.getClass().getSimpleName(), (t) -> { t = Menus.sc.nextLine();o.setVille(t);});
-		m.put("e: Saisir le code postal du " + o.getClass().getSimpleName(), (t) -> { t = Menus.sc.nextLine();o.setCodepostal(t);});
-		
-		//System.out.println("Saisir le nom du" + o.getClass().getName());
-		m.keySet().stream().sorted();
-	
-		
-		m.entrySet().stream().forEach(s-> {
-			System.out.println(s.getKey());
-			s.getValue().Set(t);
+		m.put("a: Saisir le nom du " + o.getClass().getSimpleName(), (z) -> {
+			z = Menus.sc.nextLine();
+			o.setNom(z);
+		});
+		m.put("b: Saisir le prenom du " + o.getClass().getSimpleName(), (t) -> {
+			t = Menus.sc.nextLine();
+			o.setPrenom(t);
+		});
+		m.put("c: Saisir l'adresse du " + o.getClass().getSimpleName(), (t) -> {
+			t = Menus.sc.nextLine();
+			o.setAdresse(t);
+		});
+		m.put("d: Saisir la ville du " + o.getClass().getSimpleName(), (t) -> {
+			t = Menus.sc.nextLine();
+			o.setVille(t);
+		});
+		m.put("e: Saisir le code postal du " + o.getClass().getSimpleName(), (t) -> {
+			boolean erreur = true;
+			while(erreur) {
+				try {
+					t = Menus.sc.nextLine();
+					Salarie.CtrlCodePostal(t);
+					o.setCodepostal(t);
+					erreur = false;
+				} catch (ExceptionSaisieCodePostal e) {
+					System.out.println(e.getMessage());
+				}	
+			}
 			
 		});
-		
-}
+
+		// System.out.println("Saisir le nom du" + o.getClass().getName());
+		m.keySet().stream().sorted();
+
+		m.entrySet().stream().forEach(s -> {
+			System.out.println(s.getKey());
+			s.getValue().Set(t);
+
+		});
+
+	}
 }

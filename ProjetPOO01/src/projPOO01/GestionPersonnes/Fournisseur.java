@@ -24,6 +24,9 @@ public class Fournisseur extends Personne implements IClient, IFournisseur {
 		super(di.get(EFournisseur.nom), di.get(EFournisseur.prenom), di.get(EFournisseur.adresse), di.get(EFournisseur.ville), di.get(EFournisseur.codepostal));
 		this.idfournisseur= Integer.parseInt(di.get(EFournisseur.idfournisseur));
 	}
+	public Fournisseur() {
+		this("","","","","",1);
+	}
 
 	
 	

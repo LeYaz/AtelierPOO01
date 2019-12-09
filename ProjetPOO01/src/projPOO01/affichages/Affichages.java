@@ -31,7 +31,7 @@ public class Affichages {
 
 		while(true) {
 			
-			choix = Menus.sc.next();
+			choix = Menus.sc.nextLine();
 			
 			im.entrySet().stream().filter(e->e.getKey().charAt(6) == choix.charAt(0)).
 			forEach(e->e.getValue().afficher(lp1));

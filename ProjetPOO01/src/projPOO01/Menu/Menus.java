@@ -10,7 +10,7 @@ import projPOO01.saisie.Saisir;
 public class Menus {
 	public static Scanner sc =null;
 	public static int choixmenu;
-	private static String choix = null;
+	private static String choix =null;
 	
 	public static void Menu() {
 		choix=null;
@@ -27,6 +27,7 @@ public class Menus {
 			
 			choix = sc.nextLine();
 			
+			
 			im.entrySet().stream().filter(e->e.getKey().charAt(6) == choix.charAt(0)).
 			forEach(e->e.getValue().apply());
 						
@@ -38,7 +39,7 @@ public class Menus {
 	public static void RetourMenu() {
 		
 		System.out.println("Appuyer sur 1 et valider pour afficher le menu");
-		Menus.sc.next();
+		Menus.sc.nextLine();
 		Menu();
 	}
 	
@@ -59,6 +60,7 @@ public class Menus {
 		while(true) {
 			
 			choix = sc.nextLine();
+			choixmenu = Integer.parseInt(choix);
 			
 			im.entrySet().stream().filter(e->e.getKey().charAt(6) == choix.charAt(0)).
 			forEach(e->e.getValue().apply());

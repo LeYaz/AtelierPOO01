@@ -18,6 +18,9 @@ public class Salarie extends Personne implements IClient{
 		this.secu = secu;
 	}
 	
+	public Salarie() {
+		this("","","","","","",1);
+	}
 	
 	@Override
 	public String toString() {

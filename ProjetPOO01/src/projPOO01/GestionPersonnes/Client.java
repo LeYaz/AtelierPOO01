@@ -19,7 +19,10 @@ public class Client extends Personne implements IFournisseur, IClient {
 		// TODO Auto-generated constructor stub
 		this.idclient=idclient;
 	}
-
+	
+	public Client() {
+		this("","","","","",1);
+	}
 	
 	
 	@Override
