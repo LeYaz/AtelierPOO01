@@ -3,6 +3,8 @@ package projPOO01.saisie;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import projPOO01.Controles.Controles;
 import projPOO01.Exceptions.ExceptionDate;
@@ -24,6 +26,7 @@ public class Saisir {
 	public static ArrayList<Personne> listclient = new ArrayList<Personne>();
 	public static ArrayList<Personne> listsalarie = new ArrayList<Personne>();
 	public static ArrayList<Personne> listfournisseur = new ArrayList<Personne>();
+	private static String t = "";
 	
 	public static void SaisirAll(){
 		
@@ -38,14 +41,15 @@ public class Saisir {
 	public static void SaisirPatron() {
 		boolean erreurcp;
 		boolean erreurns;
-		System.out.println("Saisir le nom du patron");
-		patron.setNom(Menus.sc.next());
-		System.out.println("Saisir le prenom du patron");
-		patron.setPrenom(Menus.sc.next());
-		System.out.println("Saisir l'adresse du patron");
-		patron.setAdresse(Menus.sc.next());
-		System.out.println("Saisir la ville du patron");
-		patron.setVille(Menus.sc.next());
+		SaisirGeneric(patron);
+//		System.out.println("Saisir le nom du patron");
+//		patron.setNom(Menus.sc.next());
+//		System.out.println("Saisir le prenom du patron");
+//		patron.setPrenom(Menus.sc.next());
+//		System.out.println("Saisir l'adresse du patron");
+//		patron.setAdresse(Menus.sc.next());
+//		System.out.println("Saisir la ville du patron");
+//		patron.setVille(Menus.sc.next());
 		erreurcp = true;
 		while(erreurcp) {
 			try {
@@ -92,6 +96,7 @@ public class Saisir {
 		}
 		if(Menus.choixmenu!=1) {
 			Menus.Menu();
+			
 		}
 		return;
 	}
@@ -411,4 +416,24 @@ public class Saisir {
 		
 	}
 	
+	public static void SaisirGeneric(Personne o) {
+		
+		Map<String, iSaisie> m = new HashMap<String, iSaisie>();
+		m.put("a: Saisir le nom du " + o.getClass().getSimpleName(), (z) -> { z = Menus.sc.nextLine();o.setNom(z);});
+		m.put("b: Saisir le prenom du " + o.getClass().getSimpleName(), (t) -> { t = Menus.sc.nextLine();o.setPrenom(t);});
+		m.put("c: Saisir l'adresse du " + o.getClass().getSimpleName(), (t) -> { t = Menus.sc.nextLine();o.setAdresse(t);});
+		m.put("d: Saisir la ville du " + o.getClass().getSimpleName(), (t) -> { t = Menus.sc.nextLine();o.setVille(t);});
+		m.put("e: Saisir le code postal du " + o.getClass().getSimpleName(), (t) -> { t = Menus.sc.nextLine();o.setCodepostal(t);});
+		
+		//System.out.println("Saisir le nom du" + o.getClass().getName());
+		m.keySet().stream().sorted();
+	
+		
+		m.entrySet().stream().forEach(s-> {
+			System.out.println(s.getKey());
+			s.getValue().Set(t);
+			
+		});
+		
+}
 }

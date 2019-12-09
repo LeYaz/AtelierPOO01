@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 
-import ProjetPOO01.Enumerations.EFournisseur;
+import projPOO01.Enumerations.EFournisseur;
 import projPOO01.Exceptions.ExceptionNumeroUnique;
 import projPOO01.GestionAchat.Achat;
 import projPOO01.GestionAchat.commande;

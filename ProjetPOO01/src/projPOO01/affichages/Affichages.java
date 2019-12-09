@@ -1,48 +1,44 @@
 package projPOO01.affichages;
 
 import java.util.ArrayList;
-import java.util.stream.Stream;
+import java.util.HashMap;
+import java.util.Map;
 
 import projPOO01.GestionPersonnes.Personne;
 import projPOO01.Menu.Menus;
 import projPOO01.saisie.Saisir;
 
 public class Affichages {
+	
+	private final static ArrayList<Personne> lp1 =  Affichages.GrouperAffichage();
+	private static String choix = null;
 
 	public static void Afficher() {
-		int choix;
+		
 		ArrayList<Personne> listpatron = new ArrayList<Personne>();
 		listpatron.add(Saisir.patron);
-		Stream<String> txt = Stream.of(
-				new String[] {
-						"Taper 1 pour afficher toutes les données",
-						"Taper 2 pour afficher les salariés",
-						"Taper 3 pour afficher les clients",
-						"Taper 4 pour afficher les fournisseur",
-						"Taper 5 pour afficher le patron",
-						"Taper 6 pour retourner au menu"
-				});
-		txt.forEach(t -> System.out.println(t));
+		
+		Map<String, iAffiche> im = new HashMap<String, iAffiche>();
+		
+		im.put("Taper 1 pour afficher toutes les données",(lp1)->Affichages.AfficherCommun(lp1));
+		im.put("Taper 2 pour afficher les salariés",(lp1)-> Affichages.AfficherCommun(Saisir.listsalarie));
+		im.put("Taper 3 pour afficher les clients",(lp1)->Affichages.AfficherCommun(Saisir.listclient));
+		im.put("Taper 4 pour afficher les fournisseur",(lp1)-> Affichages.AfficherCommun(Saisir.listfournisseur));
+		im.put("Taper 5 pour afficher le patron",(lp1)->Affichages.AfficherCommun(listpatron));
+		im.put("Taper 6 pour retourner au menu", (lp1)->Menus.Menu());
+		
+		im.keySet().stream().sorted().forEach(s-> System.out.println(s));
 
+		while(true) {
+			
+			choix = Menus.sc.next();
+			
+			im.entrySet().stream().filter(e->e.getKey().charAt(6) == choix.charAt(0)).
+			forEach(e->e.getValue().afficher(lp1));
+						
+			}
 		
-		choix=Menus.sc.nextInt();
 		
-		switch(choix) {
-		case 1 : AfficherCommun(Affichages.GrouperAffichage());
-		break;
-		case 2 : AfficherCommun(Saisir.listsalarie);
-		break;
-		case 3 : AfficherCommun(Saisir.listclient);
-		break;
-		case 4 : AfficherCommun(Saisir.listfournisseur);
-		break;
-		case 5 : AfficherCommun(listpatron);
-		break;
-		case 6 : Menus.Menu();
-		break;
-		default : Afficher();
-		break;
-		}
 	}
 	
 	

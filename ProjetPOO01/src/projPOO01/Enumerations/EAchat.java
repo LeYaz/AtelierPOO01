@@ -1,4 +1,4 @@
-package ProjetPOO01.Enumerations;
+package projPOO01.Enumerations;
 
 public enum EAchat {
 

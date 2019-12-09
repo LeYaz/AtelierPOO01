@@ -20,6 +20,7 @@ public class Effectuer {
 		Menus.Menu();	
 	}
 	
+	
 	public static void EffectuerCommande() {
 		Regrouper.RegrouperIFournisseur();
 		IFournisseur f = Choisir.ChoisirIFournisseur(Regrouper.listifournisseur);

@@ -97,6 +97,7 @@ public class Client extends Personne implements IFournisseur, IClient {
 		}catch(Exception e) {
 			throw new ExceptionNumeroUnique("Le numero saisi n'est pas un entier");
 		}
+		
 		for(Client c1:list) 
 		{
 			if(n!=c1.getIdclient()) {

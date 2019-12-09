@@ -1,59 +1,37 @@
 package projPOO01.Menu;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
-import projPOO01.Controles.Controles;
-import projPOO01.Exceptions.ExceptionInt;
-import projPOO01.actions.Effectuer;
 import projPOO01.affichages.Affichages;
 import projPOO01.saisie.Saisir;
 
 public class Menus {
 	public static Scanner sc =null;
 	public static int choixmenu;
+	private static String choix = null;
 	
 	public static void Menu() {
+		choix=null;
+		Map<String, iExecute> im = new HashMap<String, iExecute>();
+		im.put("Taper 1 pour saisir des données", Menus::Saisir);
+		im.put("Taper 2 pour Afficher les données", Affichages::Afficher);
+		im.put("Taper 3 pour saisir des achats",Saisir::SaisirAchat);
+		im.put("Taper 4 pour saisir des commandes", Saisir::SaisirCommande);
 		
-		
-		String choix = null;
-		boolean erreurint=true;
-		Stream<String> txt = Stream.of(
-				new String[] {"Taper 1 pour saisir des données",
-						"Taper 2 pour Afficher les données",
-						"Taper 3 pour saisir des achats",
-						"Taper 4 pour saisir des commandes",
-						});
-		
-		 erreurint=true;
-			while(erreurint) {
-				try {
 
-					txt.forEach(s -> System.out.println(s));
-					choix = sc.next();
-					Controles.CtrlInt(choix);
-					erreurint=false;
-					
-				}catch(ExceptionInt e) {
-					System.out.println(e.getMessage());
-				}
-			}
+		im.keySet().stream().sorted().forEach(s-> System.out.println(s));
+
+		while(true) {
 			
-		
-		
-		
-		switch(Integer.parseInt(choix)) {
-		case 1 : Saisir();
-		break;
-		case 2 : Affichages.Afficher();
-		break;
-		case 3: Effectuer.EffectuerAchat();
-		break;
-		case 4: Effectuer.EffectuerCommande();
-		default : Menu();
-		break;
-		}
-		
+			choix = sc.nextLine();
+			
+			im.entrySet().stream().filter(e->e.getKey().charAt(6) == choix.charAt(0)).
+			forEach(e->e.getValue().apply());
+						
+			}
+
 	}
 	
 	
@@ -65,51 +43,29 @@ public class Menus {
 	}
 	
 	public static void Saisir() {
-		String choix = null;
-		boolean erreurint=true;
-		Stream<String> txt = Stream.of(
-				new String[] {"Taper 1 pour saisir toutes les données",
-						"Taper 2 pour saisir les salariés",
-						"Taper 3 pour saisir les clients",
-						"Taper 4 pour saisir les fournisseur",
-						"Taper 5 pour saisir le patron",
-						"Taper 6 pour retourner au menu"});
+		choix=null;
 		
-		erreurint=true;
-		while(erreurint) {
-			try {
+		
+		Map<String, iExecute> im = new HashMap<String, iExecute>();
+		im.put("Taper 1 pour saisir toutes les données", Saisir::SaisirAll);
+		im.put("Taper 2 pour saisir les salariés", Saisir::SaisirSalarie);
+		im.put("Taper 3 pour saisir les clients",Saisir::SaisirClient);
+		im.put("Taper 4 pour saisir les fournisseur", Saisir::SaisirFournisseur);
+		im.put("Taper 5 pour saisir le patron",Saisir::SaisirPatron);
+		im.put("Taper 6 pour retourner au menu", Menus::Menu);
+
+		im.keySet().stream().sorted().forEach(s-> System.out.println(s));
+
+		while(true) {
 			
-				txt.forEach(s -> System.out.println(s));
-				
-				choix =sc.next();
-				Controles.CtrlInt(choix);
-				erreurint=false;
-				
-				
-			}catch(ExceptionInt e) {
-				System.out.println(e.getMessage());
+			choix = sc.nextLine();
+			
+			im.entrySet().stream().filter(e->e.getKey().charAt(6) == choix.charAt(0)).
+			forEach(e->e.getValue().apply());
+						
 			}
-		}
 		
 		
-		choixmenu=Integer.parseInt(choix);
-		
-		switch(choixmenu) {
-		case 1 : Saisir.SaisirAll();
-		break;
-		case 2 : Saisir.SaisirSalarie();
-		break;
-		case 3 : Saisir.SaisirClient();
-		break;
-		case 4 : Saisir.SaisirFournisseur();
-		break;
-		case 5 : Saisir.SaisirPatron();
-		break;
-		case 6 : Menu();
-		break;
-		default : Saisir();
-		break;
-		}
 		
 	}
 }

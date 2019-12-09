@@ -2,7 +2,6 @@ package projPOO01.actions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import projPOO01.GestionPersonnes.IClient;
 import projPOO01.GestionPersonnes.IFournisseur;
