@@ -1,7 +1,5 @@
 package projPOO01;
-
 import java.util.Scanner;
-
 import projPOO01.Menu.Menus;
 
 
@@ -17,6 +15,7 @@ public class Programme {
 		Menus.sc = Programme.sc;
 		
 		Menus.Menu();
+		
 
 	}
 	

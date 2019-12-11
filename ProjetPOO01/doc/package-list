@@ -1,6 +1,12 @@
-ProjetPOO01.Enumerations
 projPOO01
+projPOO01.Controles
+projPOO01.Enumerations
 projPOO01.Exceptions
 projPOO01.GestionAchat
 projPOO01.GestionPersonnes
+projPOO01.Menu
+projPOO01.actions
+projPOO01.affichages
+projPOO01.saisie
+projPOO01.utiles
 tests

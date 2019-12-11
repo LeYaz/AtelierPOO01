@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import projPOO01.Controles.Controles;
 import projPOO01.Exceptions.ExceptionDate;
@@ -45,7 +46,7 @@ public class Saisir {
 		erreurns = true;
 		while (erreurns) {
 			try {
-				System.out.println("Saisir le numero de sécurité sociale du patron");
+				System.out.println("6: Saisir le numero de sécurité sociale du patron");
 				patron.setSecu(Menus.sc.nextLine());
 				Salarie.CtrlSaisiNumeroSecu(patron.getSecu());
 				erreurns = false;
@@ -55,7 +56,7 @@ public class Saisir {
 			}
 		}
 
-		System.out.println("Saisir le salaire du patron");
+		System.out.println("7: Saisir le salaire du patron");
 		while (Menus.sc.hasNext()) {
 
 			if (Menus.sc.hasNextDouble()) {
@@ -63,7 +64,7 @@ public class Saisir {
 				Menus.sc.nextLine();
 				break;
 			} else {
-				System.out.println("Saisir le salaire du patron");
+				System.out.println("7: Saisir le salaire du patron");
 				Menus.sc.nextLine();
 			}
 
@@ -89,7 +90,7 @@ public class Saisir {
 			erreurns = true;
 			while (erreurns) {
 				try {
-					System.out.println("Saisir le numero de sécurité sociale du salarie");
+					System.out.println("6: Saisir le numero de sécurité sociale du salarie");
 					secu = Menus.sc.nextLine();
 					Salarie.CtrlSaisiNumeroSecu(secu);
 					erreurns = false;
@@ -100,14 +101,14 @@ public class Saisir {
 			}
 
 			salaire = 0;
-			System.out.println("Saisir le salaire du salarie");
+			System.out.println("7: Saisir le salaire du salarie");
 			while (Menus.sc.hasNext() && salaire == 0) {
 
 				if (Menus.sc.hasNextDouble()) {
 					salaire = Menus.sc.nextDouble();
 					break;
 				} else {
-					System.out.println("Saisir le salaire du salarie");
+					System.out.println("7: Saisir le salaire du salarie");
 					Menus.sc.nextLine();
 				}
 
@@ -139,7 +140,7 @@ public class Saisir {
 			testid = true;
 			while (testid) {
 				try {
-					System.out.println("Saisir le numero unique client");
+					System.out.println("6: Saisir le numero unique client");
 					idclient = Menus.sc.nextLine();
 					Client.CtrlNumeroUniqueClient(idclient, cl);
 					testid = false;
@@ -175,7 +176,7 @@ public class Saisir {
 			numunique = true;
 			while (numunique) {
 				try {
-					System.out.println("Saisir le numero unique fournisseur");
+					System.out.println("6: Saisir le numero unique fournisseur");
 					idfournisseur = Menus.sc.nextLine();
 					Fournisseur.CtrlNumeroUniqueFournisseur(idfournisseur, cl);
 					numunique = false;
@@ -317,26 +318,31 @@ public class Saisir {
 
 	}
 
+	/**
+	 * Méthode permettant de saisir les différents attributs de personne appelé lors de la saisi d'un patron, client, fournisseur ou salarie
+	 * @see SaisirPatron(), SaisirSalarie(), SaisirClient, SaisirFournisseur()
+	 * @param o paramètre de type personne 
+	 */
 	public static void SaisirGeneric(Personne o) {
 
-		Map<String, iSaisie> m = new HashMap<String, iSaisie>();
-		m.put("a: Saisir le nom du " + o.getClass().getSimpleName(), (z) -> {
+		Map<String, iSaisie> m = new TreeMap<String, iSaisie>();
+		m.put("1: Saisir le nom du " + o.getClass().getSimpleName(), (z) -> {
 			z = Menus.sc.nextLine();
 			o.setNom(z);
 		});
-		m.put("b: Saisir le prenom du " + o.getClass().getSimpleName(), (t) -> {
+		m.put("2: Saisir le prenom du " + o.getClass().getSimpleName(), (t) -> {
 			t = Menus.sc.nextLine();
 			o.setPrenom(t);
 		});
-		m.put("c: Saisir l'adresse du " + o.getClass().getSimpleName(), (t) -> {
+		m.put("3: Saisir l'adresse du " + o.getClass().getSimpleName(), (t) -> {
 			t = Menus.sc.nextLine();
 			o.setAdresse(t);
 		});
-		m.put("d: Saisir la ville du " + o.getClass().getSimpleName(), (t) -> {
+		m.put("4: Saisir la ville du " + o.getClass().getSimpleName(), (t) -> {
 			t = Menus.sc.nextLine();
 			o.setVille(t);
 		});
-		m.put("e: Saisir le code postal du " + o.getClass().getSimpleName(), (t) -> {
+		m.put("5: Saisir le code postal du " + o.getClass().getSimpleName(), (t) -> {
 			boolean erreur = true;
 			while(erreur) {
 				try {
@@ -350,9 +356,6 @@ public class Saisir {
 			}
 			
 		});
-
-		// System.out.println("Saisir le nom du" + o.getClass().getName());
-		m.keySet().stream().sorted();
 
 		m.entrySet().stream().forEach(s -> {
 			System.out.println(s.getKey());

@@ -13,6 +13,9 @@ public class Affichages {
 	private final static ArrayList<Personne> lp1 =  Affichages.GrouperAffichage();
 	private static String choix = null;
 
+	/**
+	 * Affiche le menu Afficher
+	 */
 	public static void Afficher() {
 		
 		ArrayList<Personne> listpatron = new ArrayList<Personne>();
@@ -27,12 +30,14 @@ public class Affichages {
 		im.put("Taper 5 pour afficher le patron",(lp1)->Affichages.AfficherCommun(listpatron));
 		im.put("Taper 6 pour retourner au menu", (lp1)->Menus.Menu());
 		
+		/**
+		 * trie les key et les affiches
+		 */
 		im.keySet().stream().sorted().forEach(s-> System.out.println(s));
 
 		while(true) {
 			
 			choix = Menus.sc.nextLine();
-			
 			im.entrySet().stream().filter(e->e.getKey().charAt(6) == choix.charAt(0)).
 			forEach(e->e.getValue().afficher(lp1));
 						
